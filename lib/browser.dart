@@ -74,7 +74,8 @@ class _BrowserState extends State<Browser> with SingleTickerProviderStateMixin {
   }
 
   Widget _buildBrowser() {
-    final currentWebViewModel = Provider.of<WebViewModel>(context, listen: true);
+    final currentWebViewModel =
+        Provider.of<WebViewModel>(context, listen: true);
     final browserModel = Provider.of<BrowserModel>(context, listen: true);
     final windowModel = Provider.of<WindowModel>(context, listen: true);
 
@@ -137,7 +138,21 @@ class _BrowserState extends State<Browser> with SingleTickerProviderStateMixin {
             }
           },
           child: Scaffold(
-              appBar: BrowserAppBar(), body: _buildWebViewTabsContent()),
+              // appBar: BrowserAppBar(),
+              appBar: AppBar(
+                toolbarHeight: 0, // 设置高度为 0
+                // bottom: PreferredSize(
+                //   preferredSize: const Size.fromHeight(0),
+                //   child: BrowserAppBar(),
+                // ),
+              ),
+              body: _buildWebViewTabsContent(),
+              bottomNavigationBar: BottomAppBar(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                height: Util.isMobile() ? kToolbarHeight : 90.0,
+                child: BrowserAppBar(),
+              )),
         ));
   }
 

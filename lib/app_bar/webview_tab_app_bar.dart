@@ -106,7 +106,7 @@ class _WebViewTabAppBarState extends State<WebViewTabAppBar>
                             ? Colors.black38
                             : Theme.of(context).colorScheme.primaryContainer,
                         leading: leading,
-                        leadingWidth: 130,
+                        leadingWidth: 56 * 2,
                         titleSpacing: 0.0,
                         title: _buildSearchTextField(),
                         actions: _buildActionsMenu(),
@@ -129,24 +129,13 @@ class _WebViewTabAppBarState extends State<WebViewTabAppBar>
 
     var webViewModel = Provider.of<WebViewModel>(context, listen: true);
     var webViewController = webViewModel.webViewController;
-
-    if (Util.isMobile() && !settings.homePageEnabled) {
-      return null;
-    }
-
     final children = <Widget>[];
-    if (Util.isDesktop()) {
+    if (Util.isMobile() && !settings.homePageEnabled) {
       children.addAll([
         IconButton(
           icon: const Icon(
             Icons.arrow_back,
             size: 20,
-          ),
-          constraints: const BoxConstraints(
-            maxWidth: 30,
-            minWidth: 30,
-            maxHeight: 30,
-            minHeight: 30,
           ),
           padding: EdgeInsets.zero,
           onPressed: () async {
@@ -160,19 +149,60 @@ class _WebViewTabAppBarState extends State<WebViewTabAppBar>
             Icons.arrow_forward,
             size: 20,
           ),
-          constraints: const BoxConstraints(
-            maxWidth: 30,
-            minWidth: 30,
-            maxHeight: 30,
-            minHeight: 30,
-          ),
           padding: EdgeInsets.zero,
           onPressed: () async {
             if (webViewController != null) {
               webViewController.goForward();
             }
           },
+        )
+      ]);
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        child: Row(
+          children: children,
         ),
+      );
+    }
+
+    if (Util.isDesktop()) {
+      children.addAll([
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.arrow_back,
+        //       size: 20,
+        //     ),
+        //     constraints: const BoxConstraints(
+        //       maxWidth: 30,
+        //       minWidth: 30,
+        //       maxHeight: 30,
+        //       minHeight: 30,
+        //     ),
+        //     padding: EdgeInsets.zero,
+        //     onPressed: () async {
+        //       if (webViewController != null) {
+        //         webViewController.goBack();
+        //       }
+        //     },
+        //   ),
+        //   IconButton(
+        //     icon: const Icon(
+        //       Icons.arrow_forward,
+        //       size: 20,
+        //     ),
+        //     constraints: const BoxConstraints(
+        //       maxWidth: 30,
+        //       minWidth: 30,
+        //       maxHeight: 30,
+        //       minHeight: 30,
+        //     ),
+        //     padding: EdgeInsets.zero,
+        //     onPressed: () async {
+        //       if (webViewController != null) {
+        //         webViewController.goForward();
+        //       }
+        //     },
+        //   ),
         IconButton(
           icon: const Icon(
             Icons.refresh,
